@@ -40,9 +40,7 @@ script.on_event(defines.events.on_tick, function()
 			sum = sum + v
 		end
 
-		if #pc.pollution_values[surface.name] > 0 then
-			pc.pollution_average[surface.name] = sum / #pc.pollution_values[surface.name]
-		end
+		pc.pollution_average[surface.name] = sum / (#pc.pollution_values[surface.name] + 1)
 
 		if pc.pollution_average[surface.name] ~= 0.0 then
 			pc.pollution_deltas[surface.name] = (current_pollution - pc.pollution_average[surface.name]) / pc.pollution_average[surface.name]
