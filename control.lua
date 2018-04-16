@@ -9,11 +9,27 @@ if not pc then
 		up = "↑",
 		down = "↓",
 		eq = "=",
+		separator = '`',
 		current_pollution_index = 0,
 		pollution_values = {},
 		pollution_average = {},
 		pollution_deltas = {}
 	}
+end
+
+local function format_value(num)
+	local a = string.format('%d', num)
+	n = #a % 3
+	if n==0 then
+		n=3
+	else
+		if n==1 and num<0 then
+			n=4
+		end
+	end
+	s1 = string.sub(a, 0, n)
+	s2 = string.sub(a, n+1)
+	return s1 .. s2:gsub("...", pc.separator .. '%1')
 end
 
 script.on_event(defines.events.on_tick, function()
@@ -67,7 +83,7 @@ script.on_event(defines.events.on_tick, function()
 				char = pc.down
 			end
 		end
-		player.gui.top.pc_button.caption = string.format("Pollution: %.2f %s %.2f", pc.pollution_average[player.surface.name], char, pc.pollution_deltas[player.surface.name])
+		player.gui.top.pc_button.caption = string.format("Pollution: %s %s %.2f", format_value(pc.pollution_average[player.surface.name]), char, pc.pollution_deltas[player.surface.name])
 	end
 
 	pc.current_pollution_index = pc.current_pollution_index + 1
