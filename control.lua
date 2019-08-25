@@ -9,7 +9,7 @@ if not pc then
 		up = "↑",
 		down = "↓",
 		eq = "=",
-		separator = '`',
+		separator = '.',
 		current_pollution_index = 0,
 		pollution_values = {},
 		pollution_average = {},
