@@ -47,7 +47,8 @@ script.on_event(defines.events.on_tick, function()
 				game.players[1].print(string.format("PC > Surface %s created, current index: %d", surface.name, pc.current_pollution_index))
 			end
 		end
-		local current_pollution = calc_pollution(surface)
+		
+		local current_pollution = surface.get_total_pollution()
 		pc.pollution_values[surface.name][pc.current_pollution_index] = current_pollution
 
 		-- recalculate average pollution value for surface
@@ -89,14 +90,6 @@ script.on_event(defines.events.on_tick, function()
 	pc.current_pollution_index = pc.current_pollution_index + 1
 	if pc.current_pollution_index >= pc.config.pollution_values_count then pc.current_pollution_index = 0 end
 end)
-
-function calc_pollution(surface)
-	local pollution = 0.0
-	for coord in surface.get_chunks() do
-		pollution = pollution + surface.get_pollution({coord.x * 32, coord.y * 32})
-	end
-	return pollution
-end
 
 function isNAN(value)
 	return value ~= value
